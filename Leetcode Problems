@@ -1,1 +1,76 @@
 Here I going to solve the Leetcode important problems in the optimal way.
+---------------------------------------------------------------------------------
+# Problems based on Two Pointers: Traversing arrays from two ends.
+---------------------------------------------------------------------------------
+Leetcode 1. Two Sum:
+Approach:
+         i) Use the unordered map to store the element and their index.
+        ii) First + Second = Target  => Second = Target - first
+Code: 
+     class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> m;
+        vector<int> ans;
+        for(int i=0; i<nums.size(); i++){
+            int first = nums[i];
+            int second = target - first;
+            if(m.find(second) != m.end()){
+                ans.push_back(i);
+                ans.push_back(m[second]);
+                break;
+            }
+            m[first] = i;
+        }
+        return ans;
+    }
+};
+Time complexity: O(n)
+------------------------------------------------------------------------------------
+Leetcode 26. Remove Duplicates from Sorted Array:
+Approach:
+         i) Two pointers approach.
+Code:
+     class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        int n = nums.size();
+        int j = 1;
+        for(int i=1; i<n; i++){
+            if(nums[i] != nums[i-1]){
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        return j;
+    }
+};
+Time Complexity: O(n)
+---------------------------------------------------------------------------------------
+Leetcode 977. Squares of a Sorted Array:
+Approach: 
+         i) Use the Two pointers approach and use thelogic of Binary search.
+Code:
+     class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n);
+        int pos = n-1;
+        int i = 0, j = n-1;
+        while(i <= j && pos >= 0){
+            if(abs(nums[i]) > abs(nums[j])){
+                ans[pos] = abs(nums[i]) * abs(nums[i]);
+                i++;
+            }else {
+                ans[pos] = abs(nums[j]) * abs(nums[j]);
+                j--;
+            }
+            pos--;
+        }
+        return ans;
+    }
+};
+Time Complexity: O(n)
+-------------------------------------------------------------------------------------------
